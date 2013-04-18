@@ -97,6 +97,16 @@ action :create do
         end
         home home_dir
       end
+      
+      unless u['groups'].empty?
+        u['groups'].each do |g|
+          group g do
+            append true
+            members u['username']
+            action :create
+          end
+        end
+      end
 
       if home_dir != "/dev/null"
         directory "#{home_dir}/.ssh" do
